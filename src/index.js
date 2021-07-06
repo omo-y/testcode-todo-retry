@@ -1,14 +1,18 @@
 import "./styles.css";
 
-const onClickAdd = () => {
-  const inputText = document.getElementById("add-text").value;
-  document.getElementById("add-text").value = "";
+//未完了リストから要素を削除
+const deletFromINcompList = (target) => {
+  document.getElementById("inconplete-list").removeChild(target);
+};
+
+//未完了リストに追加する関数
+const creatIncompleteList = (text) => {
   //div生成
   const div = document.createElement("div");
   div.className = "list-row";
   //liタグ
   const li = document.createElement("li");
-  li.innerText = inputText;
+  li.innerText = text;
   //divタグの下に各子要素を設定
   div.appendChild(li);
   //完了ボタン生成
@@ -18,13 +22,11 @@ const onClickAdd = () => {
   compbutton.addEventListener("click", () => {
     const comptarget = compbutton.parentNode;
     const text = comptarget.firstElementChild.innerText;
-    console.log(text);
     deletFromINcompList(comptarget);
     comptarget.textContent = null;
     const li = document.createElement("li");
     li.innerText = text;
-    const backbutton = document.createElement("button");
-    backbutton.innerText = "戻す";
+
     comptarget.appendChild(li);
     comptarget.appendChild(backbutton);
     document.getElementById("complete-list").appendChild(comptarget);
@@ -45,10 +47,22 @@ const onClickAdd = () => {
   //console.log(div);
   document.getElementById("inconplete-list").appendChild(div);
 };
-//未完了リストから要素を削除
-const deletFromINcompList = (target) => {
-  document.getElementById("inconplete-list").removeChild(target);
+const onClickAdd = () => {
+  const inputText = document.getElementById("add-text").value;
+  document.getElementById("add-text").value = "";
+  creatIncompleteList(inputText);
 };
+const backbutton = document.createElement("button");
+backbutton.innerText = "戻す";
+backbutton.addEventListener("click", () => {
+  //押されたボタンの親タグを完了リストから削除する。
+  const text = backbutton.parentNode.firstElementChild.innerText;
+  const deleteTarget = backbutton.parentNode;
+  document.getElementById("complete-list").removeChild(deleteTarget);
+  //テキスト取得
+  console.log(text);
+  creatIncompleteList(text);
+});
 
 document
   .getElementById("add-button")
