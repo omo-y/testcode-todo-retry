@@ -28,6 +28,17 @@ const creatIncompleteList = (text) => {
     li.innerText = text;
 
     comptarget.appendChild(li);
+    const backbutton = document.createElement("button");
+    backbutton.innerText = "戻す";
+    backbutton.addEventListener("click", () => {
+      //押されたボタンの親タグを完了リストから削除する。
+      const text = backbutton.parentNode.firstElementChild.innerText;
+      const deleteTarget = backbutton.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
+      //テキスト取得
+      console.log(text);
+      creatIncompleteList(text);
+    });
     comptarget.appendChild(backbutton);
     document.getElementById("complete-list").appendChild(comptarget);
   });
